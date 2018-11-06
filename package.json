@@ -1,15 +1,13 @@
 {
-  "name": "basic-parcel-app",
+  "name": "notepad.conorwhyte",
   "version": "0.1.0",
-  "description": "Basic react parcel app",
+  "description": "Notepad 2.0",
   "main": "index.js",
   "license": "MIT",
   "scripts": {
     "start": "parcel index.html --open",
     "build": "parcel build index.html",
-    "test": "jest --watch",
     "clean": "rm -rf node_modules dist yarn.lock .cache && yarn",
-    "puppet": "node tests/smokeTest.js",
     "deploy": "yarn build && aws s3 cp ./dist s3://$BUCKET --recursive --acl public-read-write"
   },
   "keywords": [
@@ -27,6 +25,7 @@
     "react": "^16.4.1",
     "react-ace": "^6.2.0",
     "react-dom": "^16.4.1",
+    "react-markdown": "^4.0.3",
     "react-router-dom": "^4.3.1"
   },
   "devDependencies": {
@@ -34,18 +33,10 @@
     "@babel/plugin-proposal-class-properties": "^7.1.0",
     "@babel/preset-react": "^7.0.0",
     "babel-preset-stage-3": "^6.24.1",
-    "enzyme": "^3.7.0",
-    "enzyme-adapter-react-16": "^1.6.0",
     "eslint": "^5.6.0",
     "eslint-plugin-react": "^7.11.1",
-    "jest": "^23.6.0",
     "json-to-pretty-yaml": "^1.2.2",
     "prop-types": "^15.6.2",
     "sass": "^1.14.3"
-  },
-  "jest": {
-    "moduleNameMapper": {
-      "^.+\\.(css|scss)$": "identity-obj-proxy"
-    }
   }
 }

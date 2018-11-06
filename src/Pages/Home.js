@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import YAML from 'json-to-pretty-yaml';
 import jsonFormatter from 'format-json';
 import AceEditor from 'react-ace';
+import ReactMarkdown from 'react-markdown';
 import Nav from './Nav.js';
 
 import 'brace/mode/javascript';
@@ -28,6 +29,7 @@ class Home extends Component {
       mode: "javascript",
       showGutter: false,
       paddingLeft: null,
+      showOnlyMarkdown: false,
     };
 
     this.changeEditorTheme = this.changeEditorTheme.bind(this);
@@ -109,12 +111,13 @@ class Home extends Component {
   }
 
   render() {
-    const { theme, mode, value, showGutter, fontSize, tabSize, paddingLeft } = this.state;
+    const { theme, mode, value, showGutter, fontSize, tabSize, paddingLeft, showOnlyMarkdown } = this.state;
+    const editorWidth = showOnlyMarkdown ? '50%' : '100%';
     return (
       <div className="App">
         <Nav changeEditorTheme={this.changeEditorTheme} />
         {/* { this.optionsBar() } */}
-        <div className="Editor" style={{paddingLeft}}>  
+        <div className="Editor" style={{paddingLeft, width: editorWidth}}>  
           <AceEditor
             mode={mode}
             theme={theme}
@@ -130,6 +133,11 @@ class Home extends Component {
             name="TextInputEditor" 
           />
         </div>
+        {showOnlyMarkdown && (
+          <div style={{width: '45%', float: 'right'}}>
+            <ReactMarkdown source={value}/>
+          </div>
+        )}
       </div>
     );
   }
