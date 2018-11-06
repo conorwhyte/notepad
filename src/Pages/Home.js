@@ -30,10 +30,16 @@ class Home extends Component {
       showGutter: false,
       paddingLeft: null,
       showOnlyMarkdown: false,
+      showSplitPanel: false,
     };
 
+    this.showGutter = this.showGutter.bind(this);
+    this.searchForString = this.searchForString.bind(this);
     this.changeEditorTheme = this.changeEditorTheme.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.changeEditorMode = this.changeEditorMode.bind(this);
+    this.previewMarkdown = this.previewMarkdown.bind(this);
+    this.splitMarkdownEditor = this.splitMarkdownEditor.bind(this);
   }
   
   handleChange(newValue) {
@@ -43,17 +49,45 @@ class Home extends Component {
   }
 
   changeEditorTheme(theme) {
-    this.setState({
-      theme,
+    this.setState({ theme });
+    this.changeBackgroundColour(theme);
+  }
+
+  changeBackgroundColour(theme) {
+    switch (theme) {
+      case 'textmate': 
+        document.body.style = 'background: white;';
+        break;
+      case 'kuroir': 
+        document.body.style = 'background: #E8E9E8;';
+        break;
+      case 'monokai': 
+        document.body.style = 'background: #272722;';
+        break;
+    }
+  }
+
+  showGutter(showGutter) {
+    this.setState({ 
+      showGutter,
+      paddingLeft: showGutter ? '0px' : null, 
     });
   }
 
-  changeTheme() {
-    this.setState({
-      theme: "kuroir",
-      mode: "json",
-      showGutter: true,
-    });
+  changeEditorMode(mode) {
+    this.setState({ mode });
+  }
+
+  splitMarkdownEditor() {
+    this.setState(prevState => ({
+      showSplitPanel: !prevState.showSplitPanel
+    })); 
+  }
+
+  previewMarkdown() {
+    this.setState(prevState => ({
+      showOnlyMarkdown: !prevState.showOnlyMarkdown
+    })); 
   }
 
   jsonToYaml() {
@@ -81,6 +115,18 @@ class Home extends Component {
     const { value } = this.state;
     document.cookie = `${COOKIE_VALUE}${value}`;
   }
+
+  searchForString(searchString) {
+    const reactAceComponent = this.refs.reactAceComponent;
+    const editor = reactAceComponent.editor;
+    editor.findAll(searchString, {
+      backwards: false,
+      wrap: true,
+      caseSensitive: false,
+      wholeWord: false,
+      regExp: true,
+    });
+  }
   
   getCookie() {
     const { cookie } = document;
@@ -101,24 +147,42 @@ class Home extends Component {
   optionsBar() {
     return (
       <div className ="optionsBar">
-        <button onClick={() => { this.changeTheme(); }}> JSON </button>
+        {/* <button onClick={() => { this.changeTheme(); }}> JSON </button>
         <button onClick={() => { this.jsonToYaml(); }}> YAML </button>
-        <button onClick={() => { this.format(); }}> FORMAT </button>
+        <button onClick={() => { this.format(); }}> FORMAT </button> */}
         <button onClick={() => { this.saveToCookie(); }}> SAVE </button>
-        <button onClick={() => { this.getCookie(); }}> GET </button>
+        {/* <button onClick={() => { this.getCookie(); }}> GET </button> */}
       </div>
     ); 
   }
 
   render() {
-    const { theme, mode, value, showGutter, fontSize, tabSize, paddingLeft, showOnlyMarkdown } = this.state;
-    const editorWidth = showOnlyMarkdown ? '50%' : '100%';
+    const { 
+      theme, 
+      mode, 
+      value, 
+      showGutter, 
+      fontSize, 
+      tabSize, 
+      paddingLeft, 
+      showOnlyMarkdown, 
+      showSplitPanel 
+    } = this.state;
+    const editorWidth = showSplitPanel ? '50%' : '100%';
+    const markdownWidth = showOnlyMarkdown ? '100%' : '45%';
+    const markdownPadding = showOnlyMarkdown ? '10px' : null;
+
     return (
       <div className="App">
-        <Nav changeEditorTheme={this.changeEditorTheme} />
-        {/* { this.optionsBar() } */}
+        <Nav  
+          changeEditorTheme={this.changeEditorTheme} 
+          searchForString={this.searchForString}
+          changeEditorMode={this.changeEditorMode}
+          showGutter={this.showGutter}
+          previewMarkdown={this.previewMarkdown}
+          splitMarkdownEditor={this.splitMarkdownEditor} />
         <div className="Editor" style={{paddingLeft, width: editorWidth}}>  
-          <AceEditor
+          { !showOnlyMarkdown && <AceEditor
             mode={mode}
             theme={theme}
             value={value}
@@ -130,11 +194,14 @@ class Home extends Component {
             tabSize={tabSize}
             fontSize={fontSize}
             onChange={this.handleChange}
-            name="TextInputEditor" 
-          />
+            setOptions={{
+              highlightSelectedWord: true
+            }}
+            name="aceEditor" 
+          ref="reactAceComponent" /> }
         </div>
-        {showOnlyMarkdown && (
-          <div style={{width: '45%', float: 'right'}}>
+        { ( showOnlyMarkdown || showSplitPanel ) && (
+          <div style={{width: markdownWidth, float: 'right', paddingLeft: markdownPadding}}>
             <ReactMarkdown source={value}/>
           </div>
         )}
