@@ -15,6 +15,7 @@ export default class Nav extends Component {
           'textmate', 
           'kuroir',
           'monokai',
+          'terminal',
         ],
         modes: [
           'yaml',
@@ -63,9 +64,8 @@ export default class Nav extends Component {
           <Dropdown>
             <DropdownToggle nav style={{fontWeight: '500'}}>{header}</DropdownToggle>
             <DropdownMenu>
-              <DropdownItem href="#">Format</DropdownItem>
-              <DropdownItem href="#">Validate</DropdownItem>
-              <DropdownItem href="#">Convert</DropdownItem>
+              { header === 'Json' && <DropdownItem onClick={() => this.formatText(header)}>Format</DropdownItem> }
+              <DropdownItem onClick={() => this.convertText(header)}>Convert</DropdownItem>
             </DropdownMenu>
           </Dropdown>
         </NavItem>
@@ -80,14 +80,24 @@ export default class Nav extends Component {
       this.props.splitMarkdownEditor();
     }
 
+    formatText(value) {
+      const { formatJson } = this.props;
+      value === 'Json' ? formatJson() : null;
+    }
+
+    convertText(value) {
+      const { jsonToYaml, yamlToJson } = this.props;
+      value === 'Json' ? jsonToYaml() : yamlToJson();
+    }
+
     markdownDropdown() {
       return (
         <NavItem>
           <Dropdown>
             <DropdownToggle nav style={{fontWeight: '500'}}>Markdown</DropdownToggle>
             <DropdownMenu>
-              <DropdownItem href="#" onClick={() => this.previewMarkdown()}>Preview</DropdownItem>
-              <DropdownItem href="#" onClick={() => this.splitMarkdownEditor()}>Double pane</DropdownItem>
+              <DropdownItem onClick={() => this.previewMarkdown()}>Preview</DropdownItem>
+              <DropdownItem onClick={() => this.splitMarkdownEditor()}>Double pane</DropdownItem>
             </DropdownMenu>
           </Dropdown>
         </NavItem>
@@ -101,7 +111,7 @@ export default class Nav extends Component {
             <DropdownToggle nav style={{fontWeight: '500'}}>{header}</DropdownToggle>
             <DropdownMenu>
             { items.map((value) => 
-                <DropdownItem href="#" onClick={() => onClickFunc(value)} key={value}>
+                <DropdownItem onClick={() => onClickFunc(value)} key={value}>
                   {value}
                 </DropdownItem> 
               )}

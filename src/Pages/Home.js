@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import YAML from 'json-to-pretty-yaml';
+import yaml from 'yaml';
 import jsonFormatter from 'format-json';
 import AceEditor from 'react-ace';
 import ReactMarkdown from 'react-markdown';
@@ -40,6 +41,9 @@ class Home extends Component {
     this.changeEditorMode = this.changeEditorMode.bind(this);
     this.previewMarkdown = this.previewMarkdown.bind(this);
     this.splitMarkdownEditor = this.splitMarkdownEditor.bind(this);
+    this.formatJson = this.formatJson.bind(this);
+    this.jsonToYaml = this.jsonToYaml.bind(this);
+    this.yamlToJson = this.yamlToJson.bind(this);
   }
   
   handleChange(newValue) {
@@ -64,6 +68,9 @@ class Home extends Component {
       case 'monokai': 
         document.body.style = 'background: #272722;';
         break;
+      case 'terminal': 
+        document.body.style = 'background: black;';
+        break;
     }
   }
 
@@ -80,28 +87,37 @@ class Home extends Component {
 
   splitMarkdownEditor() {
     this.setState(prevState => ({
-      showSplitPanel: !prevState.showSplitPanel
+      showSplitPanel: !prevState.showSplitPanel,
+      showOnlyMarkdown: false,
     })); 
   }
 
   previewMarkdown() {
     this.setState(prevState => ({
-      showOnlyMarkdown: !prevState.showOnlyMarkdown
+      showOnlyMarkdown: !prevState.showOnlyMarkdown,
+      showSplitPanel: false,
     })); 
   }
 
   jsonToYaml() {
-    const { value } = this.state;
+    let { value } = this.state;
     const json = JSON.parse(value);
-    const yaml = YAML.stringify(json);
+    value = YAML.stringify(json);
+
+    this.setState({ value });
+  }
+
+  yamlToJson() {
+    const { value } = this.state;
+    const yamlObj = yaml.parse(value);
+    const formattedValue = jsonFormatter.plain(yamlObj);
 
     this.setState({
-      value: yaml,
-      mode: "yaml",
+      value: formattedValue,
     });
   }
 
-  format() {
+  formatJson() {
     const { value } = this.state;
     const json = JSON.parse(value);
     const formattedValue = jsonFormatter.plain(json);
@@ -109,6 +125,10 @@ class Home extends Component {
     this.setState({
       value: formattedValue,
     });
+  }
+  
+  formatYaml() {
+    const { value } = this.state;
   }
 
   saveToCookie() {
@@ -180,7 +200,11 @@ class Home extends Component {
           changeEditorMode={this.changeEditorMode}
           showGutter={this.showGutter}
           previewMarkdown={this.previewMarkdown}
-          splitMarkdownEditor={this.splitMarkdownEditor} />
+          splitMarkdownEditor={this.splitMarkdownEditor}
+          formatJson={this.formatJson}
+          jsonToYaml={this.jsonToYaml}
+          yamlToJson={this.yamlToJson} />
+
         <div className="Editor" style={{paddingLeft, width: editorWidth}}>  
           { !showOnlyMarkdown && <AceEditor
             mode={mode}
@@ -196,6 +220,9 @@ class Home extends Component {
             onChange={this.handleChange}
             setOptions={{
               highlightSelectedWord: true
+            }}
+            editorProps={{
+              $blockScrolling: Infinity
             }}
             name="aceEditor" 
           ref="reactAceComponent" /> }
