@@ -32,17 +32,17 @@ class App extends Component {
 
     return ( 
       <div className="App">
-        <div className='App-navbar'> 
+        {/* <div className='App-navbar'> 
           <ul> 
-            <Link id='homePage' to="/">Home</Link>
+            <Link id='homePage' to="/">Notepad</Link>
             <Link
               to={{
                 pathname: '/info',
                 search: `?name=${userName}`,
                 state: { ...pageState },
-              }}> Info</Link>
+              }}> Saved </Link>
           </ul>
-        </div> 
+        </div>  */}
       </div> 
     ); 
   }
