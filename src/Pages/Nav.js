@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Navbar, NavbarNav, NavbarBrand, NavItem, NavLink, Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'mdbreact';
+import { Navbar, NavbarNav, NavbarBrand, NavItem, Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'mdbreact';
 
 import NotepadImage from '../Assets/notepad.png';
 import './Nav.scss'; 

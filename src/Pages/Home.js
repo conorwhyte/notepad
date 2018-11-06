@@ -23,7 +23,7 @@ class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: 'This is a test', 
+      value: 'Put your text in here.', 
       fontSize: 12, 
       tabSize: 2,
       theme: "textmate",

@@ -23,7 +23,7 @@
     "js-yaml": "^3.12.0",
     "mdbreact": "^4.8.2",
     "query-string": "^6.2.0",
-    "react": "^16.4.1",
+    "react": "^15.0.2 || ^16.0.0-beta || ^16.0.0",
     "react-ace": "^6.2.0",
     "react-dom": "^16.4.1",
     "react-markdown": "^4.0.3",
