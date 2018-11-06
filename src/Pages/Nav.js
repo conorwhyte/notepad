@@ -87,12 +87,18 @@ export default class Nav extends Component {
             </NavItem>
           </NavbarNav>
           <NavbarNav right>
+            <NavItem style={{color:'white', paddingRight: '10px'}}>
+              Show Gutter
+              <input  type="checkbox" 
+                      name="gutter" 
+                      style={{marginLeft: '10px', marginRight: '10px'}}/>
+            </NavItem>
             <NavItem style={{height: '20px'}}>
               <form className="form-inline md-form mt-0" style={{height: '18px'}}>
                 <input  className="form-control mr-sm-2 mb-0 text-white" 
                         type="text" 
                         placeholder="Search"
-                        style={{height: '20px'}} 
+                        style={{height: '20px', paddingBottom: '0.05rem'}} 
                         aria-label="Search" />
               </form>
             </NavItem>

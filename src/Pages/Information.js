@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { parse } from 'query-string';
 
-import './Information.scss'; 
-
 class Information extends Component {
   constructor(props) {
     super(props);

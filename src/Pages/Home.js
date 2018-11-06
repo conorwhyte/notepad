@@ -27,6 +27,7 @@ class Home extends Component {
       theme: "textmate",
       mode: "javascript",
       showGutter: false,
+      paddingLeft: null,
     };
 
     this.changeEditorTheme = this.changeEditorTheme.bind(this);
@@ -108,12 +109,12 @@ class Home extends Component {
   }
 
   render() {
-    const { theme, mode, value, showGutter, fontSize, tabSize } = this.state;
+    const { theme, mode, value, showGutter, fontSize, tabSize, paddingLeft } = this.state;
     return (
       <div className="App">
         <Nav changeEditorTheme={this.changeEditorTheme} />
         {/* { this.optionsBar() } */}
-        <div className="Editor">  
+        <div className="Editor" style={{paddingLeft}}>  
           <AceEditor
             mode={mode}
             theme={theme}
