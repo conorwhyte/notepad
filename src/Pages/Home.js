@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import YAML from 'json-to-pretty-yaml';
 import jsonFormatter from 'format-json';
 import AceEditor from 'react-ace';
+import Nav from './Nav.js';
 
 import 'brace/mode/javascript';
 import 'brace/mode/json';
@@ -32,6 +33,12 @@ class Home extends Component {
   handleChange(newValue) {
     this.setState({
       value: newValue,
+    });
+  }
+
+  changeEditorTheme(theme) {
+    this.setState({
+      theme,
     });
   }
 
@@ -101,21 +108,24 @@ class Home extends Component {
     const { theme, mode, value, showGutter, fontSize, tabSize } = this.state;
     return (
       <div className="App">
-        { this.optionsBar() }
-        <AceEditor
-          mode={mode}
-          theme={theme}
-          value={value}
-          width={'100%'}
-          height={'100vh'}
-          showGutter={showGutter}
-          showPrintMargin={false}
-          highlightActiveLine={false}
-          tabSize={tabSize}
-          fontSize={fontSize}
-          onChange={this.handleChange}
-          name="TextInputEditor" 
-        />
+        <Nav />
+        {/* { this.optionsBar() } */}
+        <div className="Editor">  
+          <AceEditor
+            mode={mode}
+            theme={theme}
+            value={value}
+            width={'100%'}
+            height={'100vh'}
+            showGutter={showGutter}
+            showPrintMargin={false}
+            highlightActiveLine={false}
+            tabSize={tabSize}
+            fontSize={fontSize}
+            onChange={this.handleChange}
+            name="TextInputEditor" 
+          />
+        </div>
       </div>
     );
   }
