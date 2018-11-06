@@ -10,6 +10,8 @@ import 'brace/mode/yaml';
 
 import 'brace/theme/textmate';
 import 'brace/theme/kuroir';
+import 'brace/theme/monokai';
+import 'brace/theme/terminal';
 
 import './Home.scss'; 
 
@@ -27,6 +29,7 @@ class Home extends Component {
       showGutter: false,
     };
 
+    this.changeEditorTheme = this.changeEditorTheme.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
   
@@ -108,7 +111,7 @@ class Home extends Component {
     const { theme, mode, value, showGutter, fontSize, tabSize } = this.state;
     return (
       <div className="App">
-        <Nav />
+        <Nav changeEditorTheme={this.changeEditorTheme} />
         {/* { this.optionsBar() } */}
         <div className="Editor">  
           <AceEditor

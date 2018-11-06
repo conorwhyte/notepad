@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Navbar, NavbarNav, NavbarBrand, NavItem, NavLink, Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'mdbreact';
-import './Nav.scss'; 
 
 import NotepadImage from '../Assets/notepad.png';
+import './Nav.scss'; 
 
 export default class Nav extends Component {
     constructor(props) {
@@ -11,41 +11,77 @@ export default class Nav extends Component {
       this.state = {
         collapse: true,
         isWideEnough: false,
+        styles: [
+          'textmate', 
+          'kuroir',
+          'monokai',
+        ],
+        modes: [
+          'yaml',
+          'json',
+          'javascript',
+        ],
       };
     }
 
     render() {
-      // caret
+      const { styles, modes } = this.state;
       return (
         <Navbar color="elegant-color" dark expand="md" scrolling>
-          <NavbarBrand href="#" style={{marginLeft: '-10px'}}>
+          <NavbarBrand href="#" style={{marginLeft: '-7px'}}>
             <img src={NotepadImage} height="30"/>
           </NavbarBrand>
           <NavbarNav left>
             <NavItem>
-              <NavLink to="#"> JSON </NavLink>
+            <Dropdown>
+              <DropdownToggle nav style={{fontWeight: '500'}}>Json</DropdownToggle>
+              <DropdownMenu>
+                <DropdownItem href="#">Format</DropdownItem>
+                <DropdownItem href="#">Validate</DropdownItem>
+                <DropdownItem href="#">Convert to Yaml</DropdownItem>
+              </DropdownMenu>
+              </Dropdown>
+            </NavItem>
+            <NavItem>
+            <Dropdown>
+              <DropdownToggle nav style={{fontWeight: '500'}}>Yaml</DropdownToggle>
+              <DropdownMenu>
+                <DropdownItem href="#">Format</DropdownItem>
+                <DropdownItem href="#">Validate</DropdownItem>
+                <DropdownItem href="#">Convert to Json</DropdownItem>
+              </DropdownMenu>
+              </Dropdown>
             </NavItem>
             <NavItem>
               <Dropdown>
-                <DropdownToggle nav >Markdown</DropdownToggle>
+                <DropdownToggle nav style={{fontWeight: '500'}}>Markdown</DropdownToggle>
                 <DropdownMenu>
-                  <DropdownItem href="#">Action</DropdownItem>
+                  <DropdownItem href="#">Preview</DropdownItem>
+                  <DropdownItem href="#">Double pane</DropdownItem>
                 </DropdownMenu>
               </Dropdown>
             </NavItem>
             <NavItem>
               <Dropdown>
-                <DropdownToggle nav >Style</DropdownToggle>
+                <DropdownToggle nav style={{fontWeight: '500'}}>Style</DropdownToggle>
                 <DropdownMenu>
-                  <DropdownItem href="#">Action</DropdownItem>
+                  { styles.map((value) => 
+                    <DropdownItem href="#" onClick={() => this.props.changeEditorTheme(value)} key={value}>
+                      {value}
+                    </DropdownItem> 
+                  )}
                 </DropdownMenu>
               </Dropdown>
             </NavItem>
             <NavItem>
               <Dropdown>
-                <DropdownToggle nav >Mode</DropdownToggle>
+                <DropdownToggle nav style={{fontWeight: '500'}}>Mode</DropdownToggle>
                 <DropdownMenu>
-                  <DropdownItem href="#">Action</DropdownItem>
+                { modes.map((value) => 
+                    <DropdownItem href="#" onClick={() => this.props.changeEditorTheme(value)} key={value}>
+                      {value}
+                    </DropdownItem> 
+                  )}
                 </DropdownMenu>
               </Dropdown>
             </NavItem>
