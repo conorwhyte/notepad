@@ -126,15 +126,6 @@ class Home extends Component {
       value: formattedValue,
     });
   }
-  
-  formatYaml() {
-    const { value } = this.state;
-  }
-
-  saveToCookie() {
-    const { value } = this.state;
-    document.cookie = `${COOKIE_VALUE}${value}`;
-  }
 
   searchForString(searchString) {
     const reactAceComponent = this.refs.reactAceComponent;
@@ -146,34 +137,6 @@ class Home extends Component {
       wholeWord: false,
       regExp: true,
     });
-  }
-  
-  getCookie() {
-    const { cookie } = document;
-    const decodedCookie = decodeURIComponent(cookie);
-    const cookieArray = decodedCookie.split(';');
-
-    cookieArray.forEach((value) => {
-      while (value.charAt(0) == ' ') {
-        value = value.substring(1);
-      }
-
-      if (value.indexOf(COOKIE_VALUE) === 0) {
-          console.log(value.substring(COOKIE_VALUE.length, value.length));
-      }
-    });
-  }
-
-  optionsBar() {
-    return (
-      <div className ="optionsBar">
-        {/* <button onClick={() => { this.changeTheme(); }}> JSON </button>
-        <button onClick={() => { this.jsonToYaml(); }}> YAML </button>
-        <button onClick={() => { this.format(); }}> FORMAT </button> */}
-        <button onClick={() => { this.saveToCookie(); }}> SAVE </button>
-        {/* <button onClick={() => { this.getCookie(); }}> GET </button> */}
-      </div>
-    ); 
   }
 
   render() {
