@@ -128,8 +128,8 @@ export default class Nav extends Component {
           </DropdownToggle>
           <DropdownMenu>
             <DropdownItem onClick={() => this.loadNote()}>Your note</DropdownItem>
-            <DropdownItem onClick={() => this.makeMarkdown()}>Conor MD CV</DropdownItem>
-            <DropdownItem onClick={() => this.loadJsonExample()}>JSON Example</DropdownItem>
+            <DropdownItem onClick={() => this.makeMarkdown()}>Sample MD</DropdownItem>
+            <DropdownItem onClick={() => this.loadJsonExample()}>Sample Json</DropdownItem>
           </DropdownMenu>
         </Dropdown>
       );
