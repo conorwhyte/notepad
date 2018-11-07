@@ -6,9 +6,9 @@
   "license": "MIT",
   "scripts": {
     "start": "parcel index.html --open",
-    "build": "parcel build index.html",
+    "build": "parcel build index.html --detailed-report --no-source-maps",
     "clean": "rm -rf node_modules dist yarn.lock .cache && yarn",
-    "deploy": "yarn build && aws s3 cp ./dist s3://$BUCKET --recursive --acl public-read-write"
+    "deploy": "aws s3 cp ./dist s3://$BUCKET --recursive --acl public-read-write"
   },
   "keywords": [
     "React",
