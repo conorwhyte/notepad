@@ -34,16 +34,7 @@ class Home extends Component {
       showSplitPanel: false,
     };
 
-    this.showGutter = this.showGutter.bind(this);
-    this.searchForString = this.searchForString.bind(this);
-    this.changeEditorTheme = this.changeEditorTheme.bind(this);
     this.handleChange = this.handleChange.bind(this);
-    this.changeEditorMode = this.changeEditorMode.bind(this);
-    this.previewMarkdown = this.previewMarkdown.bind(this);
-    this.splitMarkdownEditor = this.splitMarkdownEditor.bind(this);
-    this.formatJson = this.formatJson.bind(this);
-    this.jsonToYaml = this.jsonToYaml.bind(this);
-    this.yamlToJson = this.yamlToJson.bind(this);
   }
   
   handleChange(newValue) {
@@ -174,15 +165,15 @@ class Home extends Component {
     return (
       <div className="App">
         <Nav  
-          changeEditorTheme={this.changeEditorTheme} 
-          searchForString={this.searchForString}
-          changeEditorMode={this.changeEditorMode}
-          showGutter={this.showGutter}
-          previewMarkdown={this.previewMarkdown}
-          splitMarkdownEditor={this.splitMarkdownEditor}
-          formatJson={this.formatJson}
-          jsonToYaml={this.jsonToYaml}
-          yamlToJson={this.yamlToJson} />
+          changeEditorTheme={this.changeEditorTheme.bind(this)} 
+          searchForString={this.searchForString.bind(this)}
+          changeEditorMode={this.changeEditorMode.bind(this)}
+          showGutter={this.showGutter.bind(this)}
+          previewMarkdown={this.previewMarkdown.bind(this)}
+          splitMarkdownEditor={this.splitMarkdownEditor.bind(this)}
+          formatJson={this.formatJson.bind(this)}
+          jsonToYaml={this.jsonToYaml.bind(this)}
+          yamlToJson={this.yamlToJson.bind(this)} />
 
         <div className="Editor" style={{paddingLeft, width: editorWidth}}>  
           { !showOnlyMarkdown && this.textEditor() }
