@@ -80,14 +80,6 @@ export default class Nav extends Component {
       );
     }
 
-    previewMarkdown() {
-      this.props.previewMarkdown();
-    }
-
-    splitMarkdownEditor() {
-      this.props.splitMarkdownEditor();
-    }
-
     formatText(value) {
       const { formatJson } = this.props;
       value === 'Json' ? formatJson() : null;
@@ -100,12 +92,12 @@ export default class Nav extends Component {
 
     loadNote() {
       this.props.resetNote();
-      this.splitMarkdownEditor();
+      this.props.splitMarkdownEditor();
     }
 
     makeMarkdown() {
       this.props.savePreviousValue();
-      this.splitMarkdownEditor();
+      this.props.splitMarkdownEditor();
       this.props.handleChange(MARKDOWN_CV);
     }
 
@@ -120,8 +112,8 @@ export default class Nav extends Component {
           <Dropdown>
             <DropdownToggle nav style={{fontWeight: '500'}}>Markdown</DropdownToggle>
             <DropdownMenu>
-              <DropdownItem onClick={() => this.previewMarkdown()}>Preview</DropdownItem>
-              <DropdownItem onClick={() => this.splitMarkdownEditor()}>Double pane</DropdownItem>
+              <DropdownItem onClick={() => this.props.previewMarkdown()}>Preview</DropdownItem>
+              <DropdownItem onClick={() => this.props.splitMarkdownEditor()}>Double pane</DropdownItem>
             </DropdownMenu>
           </Dropdown>
         </NavItem>

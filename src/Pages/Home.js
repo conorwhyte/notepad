@@ -174,9 +174,6 @@ class Home extends Component {
         tabSize={tabSize}
         fontSize={fontSize}
         onChange={this.handleChange}
-        setOptions={{
-          highlightSelectedWord: true
-        }}
         editorProps={{
           $blockScrolling: Infinity
         }}
