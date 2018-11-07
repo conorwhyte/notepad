@@ -139,18 +139,34 @@ class Home extends Component {
     });
   }
 
+  textEditor() {
+    const { mode, theme, value, showGutter, tabSize, fontSize } = this.state;
+    return (
+      <AceEditor
+        mode={mode}
+        theme={theme}
+        value={value}
+        width={'100%'}
+        height={'100vh'}
+        showGutter={showGutter}
+        showPrintMargin={false}
+        highlightActiveLine={false}
+        tabSize={tabSize}
+        fontSize={fontSize}
+        onChange={this.handleChange}
+        setOptions={{
+          highlightSelectedWord: true
+        }}
+        editorProps={{
+          $blockScrolling: Infinity
+        }}
+        name="aceEditor" 
+        ref="reactAceComponent" />
+    );
+  }
+
   render() {
-    const { 
-      theme, 
-      mode, 
-      value, 
-      showGutter, 
-      fontSize, 
-      tabSize, 
-      paddingLeft, 
-      showOnlyMarkdown, 
-      showSplitPanel 
-    } = this.state;
+    const { value, paddingLeft, showOnlyMarkdown, showSplitPanel } = this.state;
     const editorWidth = showSplitPanel ? '50%' : '100%';
     const markdownWidth = showOnlyMarkdown ? '100%' : '45%';
     const markdownPadding = showOnlyMarkdown ? '10px' : null;
@@ -169,26 +185,7 @@ class Home extends Component {
           yamlToJson={this.yamlToJson} />
 
         <div className="Editor" style={{paddingLeft, width: editorWidth}}>  
-          { !showOnlyMarkdown && <AceEditor
-            mode={mode}
-            theme={theme}
-            value={value}
-            width={'100%'}
-            height={'100vh'}
-            showGutter={showGutter}
-            showPrintMargin={false}
-            highlightActiveLine={false}
-            tabSize={tabSize}
-            fontSize={fontSize}
-            onChange={this.handleChange}
-            setOptions={{
-              highlightSelectedWord: true
-            }}
-            editorProps={{
-              $blockScrolling: Infinity
-            }}
-            name="aceEditor" 
-          ref="reactAceComponent" /> }
+          { !showOnlyMarkdown && this.textEditor() }
         </div>
         { ( showOnlyMarkdown || showSplitPanel ) && (
           <div style={{width: markdownWidth, float: 'right', paddingLeft: markdownPadding}}>
