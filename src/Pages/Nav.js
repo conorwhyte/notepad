@@ -2,13 +2,13 @@ import React, { Component } from 'react';
 import { 
   Navbar, 
   NavbarNav, 
-  NavbarBrand, 
   NavItem, 
   Dropdown, 
   DropdownToggle, 
   DropdownMenu, 
   DropdownItem 
 } from 'mdbreact';
+import { MARKDOWN_CV, JSON_EXAMPLE } from '../Assets/Constants';
 
 import NotepadImage from '../Assets/notepad.png';
 import './Nav.scss'; 
@@ -28,6 +28,7 @@ export default class Nav extends Component {
           'yaml',
           'json',
           'javascript',
+          'markdown',
         ],
       };
     }
@@ -97,6 +98,22 @@ export default class Nav extends Component {
       value === 'Json' ? jsonToYaml() : yamlToJson();
     }
 
+    loadNote() {
+      this.props.resetNote();
+      this.splitMarkdownEditor();
+    }
+
+    makeMarkdown() {
+      this.props.savePreviousValue();
+      this.splitMarkdownEditor();
+      this.props.handleChange(MARKDOWN_CV);
+    }
+
+    loadJsonExample() {
+      this.props.savePreviousValue();
+      this.props.handleChange(JSON_EXAMPLE);
+    }
+
     markdownDropdown() {
       return (
         <NavItem>
@@ -108,6 +125,21 @@ export default class Nav extends Component {
             </DropdownMenu>
           </Dropdown>
         </NavItem>
+      );
+    }
+
+    notepadIcon() {
+      return (
+        <Dropdown>
+          <DropdownToggle nav style={{fontWeight: '500', marginLeft: '-12px', padding: '.5rem .3rem'}}>
+            <img src={NotepadImage} height="30"/>
+          </DropdownToggle>
+          <DropdownMenu>
+            <DropdownItem onClick={() => this.loadNote()}>Your note</DropdownItem>
+            <DropdownItem onClick={() => this.makeMarkdown()}>Conor MD CV</DropdownItem>
+            <DropdownItem onClick={() => this.loadJsonExample()}>JSON Example</DropdownItem>
+          </DropdownMenu>
+        </Dropdown>
       );
     }
 
@@ -134,9 +166,7 @@ export default class Nav extends Component {
       
       return (
         <Navbar color="elegant-color" dark expand="md" scrolling>
-          <NavbarBrand href="#" style={{marginLeft: '-7px'}}>
-            <img src={NotepadImage} height="30"/>
-          </NavbarBrand>
+          { this.notepadIcon() }
           <NavbarNav left>
             { this.yamlJsonDropdown('Json') }
             

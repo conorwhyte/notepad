@@ -9,6 +9,7 @@ import Nav from './Nav.js';
 import 'brace/mode/javascript';
 import 'brace/mode/json';
 import 'brace/mode/yaml';
+import 'brace/mode/markdown';
 
 import 'brace/theme/textmate';
 import 'brace/theme/kuroir';
@@ -17,17 +18,16 @@ import 'brace/theme/terminal';
 
 import './Home.scss'; 
 
-const COOKIE_VALUE = 'userValue=';
-
 class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: 'Put your text in here.', 
+      value: 'Put your text in here.',
+      prevValue: 'Put your text in here.', 
       fontSize: 12, 
       tabSize: 2,
       theme: "textmate",
-      mode: "javascript",
+      mode: "markdown",
       showGutter: false,
       paddingLeft: null,
       showOnlyMarkdown: false,
@@ -41,6 +41,18 @@ class Home extends Component {
     this.setState({
       value: newValue,
     });
+  }
+
+  savePreviousValue() {
+    this.setState(prevState => ({
+      prevValue: prevState.value,
+    }));
+  }
+
+  resetNote() {
+    this.setState(prevState => ({
+      value: prevState.prevValue,
+    }));
   }
 
   changeEditorTheme(theme) {
@@ -130,6 +142,23 @@ class Home extends Component {
     });
   }
 
+  navbar() {
+    return (
+      <Nav changeEditorTheme={this.changeEditorTheme.bind(this)} 
+        searchForString={this.searchForString.bind(this)}
+        changeEditorMode={this.changeEditorMode.bind(this)}
+        showGutter={this.showGutter.bind(this)}
+        previewMarkdown={this.previewMarkdown.bind(this)}
+        splitMarkdownEditor={this.splitMarkdownEditor.bind(this)}
+        formatJson={this.formatJson.bind(this)}
+        jsonToYaml={this.jsonToYaml.bind(this)}
+        yamlToJson={this.yamlToJson.bind(this)}
+        handleChange={this.handleChange}
+        savePreviousValue={this.savePreviousValue.bind(this)} 
+        resetNote={this.resetNote.bind(this)} />
+    );
+  }
+
   textEditor() {
     const { mode, theme, value, showGutter, tabSize, fontSize } = this.state;
     return (
@@ -158,28 +187,20 @@ class Home extends Component {
 
   render() {
     const { value, paddingLeft, showOnlyMarkdown, showSplitPanel } = this.state;
-    const editorWidth = showSplitPanel ? '50%' : '100%';
-    const markdownWidth = showOnlyMarkdown ? '100%' : '45%';
-    const markdownPadding = showOnlyMarkdown ? '10px' : null;
+    const markdownStyle = {
+      float: 'right', 
+      width: showOnlyMarkdown ? '100%' : '45%',
+      padding: `10px 10px 10px ${showOnlyMarkdown ? '10px' : null}`,
+    };
 
     return (
       <div className="App">
-        <Nav  
-          changeEditorTheme={this.changeEditorTheme.bind(this)} 
-          searchForString={this.searchForString.bind(this)}
-          changeEditorMode={this.changeEditorMode.bind(this)}
-          showGutter={this.showGutter.bind(this)}
-          previewMarkdown={this.previewMarkdown.bind(this)}
-          splitMarkdownEditor={this.splitMarkdownEditor.bind(this)}
-          formatJson={this.formatJson.bind(this)}
-          jsonToYaml={this.jsonToYaml.bind(this)}
-          yamlToJson={this.yamlToJson.bind(this)} />
-
-        <div className="Editor" style={{paddingLeft, width: editorWidth}}>  
+        { this.navbar() }
+        <div className="Editor" style={{paddingLeft, width: showSplitPanel ? '50%' : '100%'}}>  
           { !showOnlyMarkdown && this.textEditor() }
         </div>
         { ( showOnlyMarkdown || showSplitPanel ) && (
-          <div style={{width: markdownWidth, float: 'right', paddingLeft: markdownPadding}}>
+          <div style={markdownStyle}>
             <ReactMarkdown source={value}/>
           </div>
         )}
