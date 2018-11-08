@@ -1,4 +1,3 @@
-/* eslint-disable react/no-string-refs */
 import React, { Component } from 'react';
 import YAML from 'json-to-pretty-yaml';
 import yaml from 'yaml';
@@ -35,6 +34,7 @@ class Home extends Component {
       showSplitPanel: false,
     };
 
+    this.aceEditorRef = React.createRef();
     this.handleChange = this.handleChange.bind(this);
   }
   
@@ -132,8 +132,8 @@ class Home extends Component {
   }
 
   searchForString(searchString) {
-    const reactAceComponent = this.refs.reactAceComponent;
-    const editor = reactAceComponent.editor;
+    const aceComp = this.aceEditorRef.current;
+    const editor = aceComp.editor;
     editor.findAll(searchString, {
       backwards: false,
       wrap: true,
@@ -179,7 +179,7 @@ class Home extends Component {
           $blockScrolling: Infinity
         }}
         name="aceEditor" 
-        ref="reactAceComponent" />
+        ref={this.aceEditorRef} />
     );
   }
 

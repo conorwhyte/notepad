@@ -60,7 +60,7 @@ export default class Nav extends Component {
               placeholder="Search"
               style={{height: '20px', paddingBottom: '0.05rem'}} 
               aria-label="Search"
-              onChange={this.onSearch} />
+              onChange={this.onSearch.bind(this)} />
           </form>
         </NavItem>
       </NavbarNav>
