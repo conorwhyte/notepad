@@ -1,3 +1,4 @@
+/* eslint-disable react/no-string-refs */
 import React, { Component } from 'react';
 import YAML from 'json-to-pretty-yaml';
 import yaml from 'yaml';
@@ -26,8 +27,8 @@ class Home extends Component {
       prevValue: 'Put your text in here.', 
       fontSize: 12, 
       tabSize: 2,
-      theme: "textmate",
-      mode: "markdown",
+      theme: 'textmate',
+      mode: 'markdown',
       showGutter: false,
       paddingLeft: null,
       showOnlyMarkdown: false,
@@ -62,18 +63,18 @@ class Home extends Component {
 
   changeBackgroundColour(theme) {
     switch (theme) {
-      case 'textmate': 
-        document.body.style = 'background: white;';
-        break;
-      case 'kuroir': 
-        document.body.style = 'background: #E8E9E8;';
-        break;
-      case 'monokai': 
-        document.body.style = 'background: #272722;';
-        break;
-      case 'terminal': 
-        document.body.style = 'background: black;';
-        break;
+    case 'textmate': 
+      document.body.style = 'background: white;';
+      break;
+    case 'kuroir': 
+      document.body.style = 'background: #E8E9E8;';
+      break;
+    case 'monokai': 
+      document.body.style = 'background: #272722;';
+      break;
+    case 'terminal': 
+      document.body.style = 'background: black;';
+      break;
     }
   }
 
