@@ -10,7 +10,6 @@ import 'brace/mode/javascript';
 import 'brace/mode/json';
 import 'brace/mode/yaml';
 import 'brace/mode/markdown';
-
 import 'brace/theme/textmate';
 import 'brace/theme/kuroir';
 import 'brace/theme/monokai';

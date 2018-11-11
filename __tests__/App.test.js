@@ -6,7 +6,12 @@ import Home from '../src/Pages/Home';
 Enzyme.configure({ adapter: new Adapter() });
 
 test('App renders successfully', () => {
-  // const app = shallow(<Home />);
-  // expect(app).toBeDefined();
-  expect(true).toBe(true);
+  const app = shallow(<Home />);
+  expect(app).toBeDefined();
+});
+
+test('App renders with nav and editor', () => {
+  const app = shallow(<Home />);
+  expect(app.find('.navbar')).toBeDefined();
+  expect(app.find('.Editor')).toBeDefined();
 });
