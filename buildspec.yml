@@ -15,4 +15,6 @@ phases:
 
 artifacts:
   files:
-    - ./*
+    - index.html
+    - src* 
+    - notepad*
