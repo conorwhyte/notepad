@@ -11,4 +11,4 @@ phases:
 
 artifacts:
   files:
-    - index.html
+    - ./*
