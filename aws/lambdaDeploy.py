@@ -6,8 +6,8 @@ import mimetypes
 
 def lambda_handler(event, context):
     
-    sns = boto3.resource('sns')
-    topic = sns.Topic('arn:aws:sns:eu-west-1:744962777212:deployWebsite')
+    # sns = boto3.resource('sns')
+    # topic = sns.Topic('arn:aws:sns:eu-west-1:744962777212:deployWebsite')
     
     location = {
         "bucketName" : 'conorwhyte.com-build', 
@@ -40,14 +40,15 @@ def lambda_handler(event, context):
                 
         print 'DONE!'
         
-        topic.publish(Subject="Deployment Passed - conorwhyte.com", Message="This is a message")
+        # topic.publish(Subject="Deployment Passed - conorwhyte.com", Message="This is a message")
         
         if job: 
             codepipeline = boto3.client('codepipeline')
             codepipeline.put_job_success_result(jobId=job["id"])
         
     except: 
-        topic.publish(Subject="Deployment Failed - conorwhyte.com", Message="This is a message")
+        print "FAILURE"
+        # topic.publish(Subject="Deployment Failed - conorwhyte.com", Message="This is a message")
         raise
         
     
