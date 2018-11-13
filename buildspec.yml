@@ -3,11 +3,14 @@ version: 0.1
 phases:
   pre_build:
     command:
+      - echo "STARTING THE BUILD CONOR"
       - npm install
       - npm test
+
   build:
     command:
       - npm run build 
+
 artifacts:
   files:
     - ./*
