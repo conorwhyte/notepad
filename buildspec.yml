@@ -4,13 +4,13 @@ phases:
   pre_build:
     commands:
       - echo "STARTING THE BUILD CONOR"
-      - yarn
-      - yarn add -g parcel-bundler
-      - yarn test
+      - npm install
+      - npm install -g parcel-bundler
+      - npm test
 
   build:
     commands:
-      - yarn build 
+      - npm run build 
 
 artifacts:
   files:
