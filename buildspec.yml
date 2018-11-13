@@ -11,7 +11,8 @@ phases:
   build:
     commands:
       - npm run build 
+      - cp -a /dist/. ./
 
 artifacts:
   files:
-    - dist/*
+    - ./*
