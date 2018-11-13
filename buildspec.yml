@@ -3,12 +3,11 @@ version: 0.1
 phases:
   pre_build:
     command:
-      - yarn
-      - yarn test
+      - npm install
+      - npm test
   build:
     command:
-      - yarn build
-
+      - npm run build 
 artifacts:
   files:
     - ./*
