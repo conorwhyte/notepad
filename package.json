@@ -7,7 +7,7 @@
   "scripts": {
     "start": "parcel index.html --open",
     "build": "parcel build index.html --detailed-report --no-source-maps",
-    "test": "jest --watch",
+    "test": "jest",
     "clean": "rm -rf node_modules dist yarn.lock .cache && yarn",
     "deploy": "aws s3 cp ./dist s3://$BUCKET --recursive --acl public-read-write"
   },
