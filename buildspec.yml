@@ -12,5 +12,5 @@ phases:
 artifacts:
   files:
     - ./*
-    - src/
-    - dist/
+    - src/*
+    - dist/*
